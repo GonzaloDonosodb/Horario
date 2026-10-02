@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Horario 2º SMR</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f3f5fb;--fg:#181c30;--card:#fff;--line:#e2e6f2;--mut:#69708f;--hl:#3b5bf0;--hl2:#8b5cf6;--sh:0 4px 18px rgba(30,40,90,.08);
+--mme:#dbe8ff;--sr:#d5f5e0;--aw:#fdf0c4;--sor:#fbdcec;--pro:#e6e0fb;--ipe:#ffe6cf;--dig:#c8f1f7;--sos:#e3e6ec;--pi:#fdd9d9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1220;--fg:#eceffc;--card:#1a1e33;--line:#2b3150;--mut:#9aa2c8;--hl:#7c93ff;--sh:0 4px 18px rgba(0,0,0,.4);
+--mme:#213c66;--sr:#164d2c;--aw:#5a4508;--sor:#57203f;--pro:#3a2f70;--ipe:#683611;--dig:#0f4752;--sos:#383d50;--pi:#672626}}
+:root[data-theme="dark"]{--bg:#0f1220;--fg:#eceffc;--card:#1a1e33;--line:#2b3150;--mut:#9aa2c8;--hl:#7c93ff;--sh:0 4px 18px rgba(0,0,0,.4);
+--mme:#213c66;--sr:#164d2c;--aw:#5a4508;--sor:#57203f;--pro:#3a2f70;--ipe:#683611;--dig:#0f4752;--sos:#383d50;--pi:#672626}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(135deg,var(--hl),var(--hl2));color:#fff;padding:26px 16px 70px}
+.top{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+h1{margin:0;font-size:1.7rem}
+header p{margin:4px 0 0;opacity:.9}
+.acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}#ray,#esc,#cls{background:#fff;color:var(--hl);font-weight:700;text-decoration:none;border-radius:999px;padding:10px 18px;box-shadow:0 2px 8px rgba(0,0,0,.15)}#ray:hover,#esc:hover,#cls:hover{transform:translateY(-1px)}
+#theme{background:rgba(255,255,255,.2);border:0;color:#fff;border-radius:999px;width:42px;height:42px;font-size:1.2rem;cursor:pointer}
+main{max-width:1000px;margin:-52px auto 0;padding:0 14px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh);padding:16px;margin-bottom:16px}
+.lab{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+#nowName{font-size:1.4rem;font-weight:800;margin:2px 0}
+.prog{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 6px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--hl),var(--hl2));border-radius:99px;transition:width .6s}
+.mut{color:var(--mut);font-size:.9rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button,.chip{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+.tabs button.on{background:var(--hl);color:#fff;border-color:var(--hl)}
+.wrap{overflow-x:auto}
+table{border-collapse:separate;border-spacing:5px;width:100%;min-width:660px}
+th{font-size:.9rem;padding:8px;border-radius:10px}
+th.today{background:var(--hl);color:#fff}
+td.h{font-size:.75rem;color:var(--mut);white-space:nowrap;text-align:center}
+td.h b{display:block;color:var(--fg);font-size:.9rem}
+td.c{border-radius:12px;padding:10px 6px;text-align:center;font-weight:600;font-size:.88rem;height:62px;transition:.15s}
+td.c small{display:block;font-size:1.15rem;margin-bottom:2px}
+td.c:hover{transform:translateY(-2px)}
+td.today{outline:2px solid var(--hl)}
+td.cur{box-shadow:0 0 0 4px color-mix(in srgb,var(--hl) 40%,transparent)}
+td.dim{opacity:.18}
+tr.rec td{text-align:center;font-size:.72rem;color:var(--mut);padding:0}
+.mme{background:var(--mme)}.sr{background:var(--sr)}.aw{background:var(--aw)}.sor{background:var(--sor)}.pro{background:var(--pro)}
+.ipe{background:var(--ipe)}.dig{background:var(--dig)}.sos{background:var(--sos)}.pi{background:var(--pi)}
+.g1{border:3px solid #3b82f6!important}.g2{border:3px solid #22c55e!important}.g3{border:3px solid #f59e0b!important}.g4{border:3px solid #ec4899!important}
+.chip.prof{flex-direction:column;align-items:flex-start;gap:4px}.chip.prof .pn{font-weight:800;font-size:1rem}.chip.prof .ps{font-size:.8rem;color:var(--mut)}
+.leg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.chip{display:flex;justify-content:space-between;align-items:center;text-align:left}
+.chip.on{outline:2px solid var(--hl)}
+.chip b{opacity:.8;font-size:.8rem}
+#day{display:none}
+.item{display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;margin-bottom:8px}
+.item .t{min-width:92px;font-size:.82rem;color:var(--mut)}
+.item .n{font-weight:700}
+.item.cur{box-shadow:0 0 0 3px var(--hl)}
+@media(min-width:701px){.tabs{display:none}}
+@media(max-width:700px){#grid{display:none}#day{display:block}h1{font-size:1.4rem}}
+@media print{header{background:none;color:#000;padding:0}#theme,#ray,#esc,#cls,.tabs,.now{display:none}main{margin:0}#grid{display:block!important}#day{display:none!important}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><h1>📚 Horario 2º SMR</h1><p>Sistemas Microinformáticos y Redes · 8:30 – 14:30</p></div>
+<div class="acts"><a id="ray" href="https://rayuela.educarex.es/modulo_acceso/" target="_blank" rel="noopener noreferrer">Rayuela</a><a id="esc" href="https://escholarium.educarex.es/LMS/index.php?bd=escholarium" target="_blank" rel="noopener noreferrer">Escholarium</a><a id="cls" href="https://edu.google.com/intl/es/workspace-for-education/products/classroom/" target="_blank" rel="noopener noreferrer">Classroom</a><button id="theme" title="Cambiar tema" aria-label="Cambiar tema">🌓</button></div></div></header>
+<main>
+<section class="card now"><div class="lab" id="nowLab"></div><div id="nowName"></div>
+<div class="prog"><i id="pb"></i></div><div class="mut" id="nowSub"></div></section>
+<section class="card">
+<div class="tabs" id="bar"></div>
+<div id="grid" class="wrap"><table id="tbl"></table></div>
+<div id="day"></div>
+</section>
+<section class="card"><div class="lab" style="margin-bottom:8px">Asignaturas · pulsa una para resaltarla · horas/semana</div><div class="leg" id="leg"></div></section>
+<section class="card"><div class="lab" style="margin-bottom:8px">Profesores · pulsa uno para resaltar sus asignaturas</div><div class="leg" id="pleg"></div></section>
+</main>
+<script>
+const days=["Lunes","Martes","Miércoles","Jueves","Viernes"];
+const hours=[["8:30","9:25"],["9:25","10:20"],["10:40","11:35"],["11:35","12:30"],["12:40","13:35"],["13:35","14:30"]];
+const S={
+ mme:["Montaje y Mantenimiento","mme","🔧","g1"],sr:["Servicios en Red","sr","🌐","g2"],aw:["Aplicaciones Web","aw","💻","g3"],
+ sor:["Sistemas Operativos en Red","sor","🖥️","g4"],pro:["Programación","pro","⌨️","g3"],ipe:["IPE II","ipe","💼","g4"],
+ dig:["Digitalización","dig","📡","g3"],sos:["Sostenibilidad","sos","🌱","g4"],pi:["Proyecto Intermodular","pi","🚀","g1"]};
+const T=[
+ ["mme","sor","mme","dig","aw"],
+ ["mme","pro","mme","sor","sos"],
+ ["pro","sr","aw","ipe","sor"],
+ ["sor","sr","aw","sr","sor"],
+ ["ipe","aw","sor","mme","mme"],
+ ["sr","pi","sos","pro","sr"]];
+const tm=s=>{const[a,b]=s.split(":").map(Number);return a*60+b};
+const $=id=>document.getElementById(id);
+let sel=null,hl=null,view=0;
+const isDim=k=>hl&&hl!==k&&hl!==S[k][3];
+const P=[["María","g1","👩‍🏫"],["Saúl","g2","👨‍🏫"],["Mari Sol","g3","👩‍🏫"],["Manolo","g4","👨‍🏫"]];
+const N=new Date();
+const todayIdx=(N.getDay()>=1&&N.getDay()<=5)?N.getDay()-1:-1;
+if(todayIdx>=0)sel=todayIdx;
+function state(){
+ const d=new Date(),m=d.getHours()*60+d.getMinutes(),ti=(d.getDay()>=1&&d.getDay()<=5)?d.getDay()-1:-1;
+ let cur=-1;hours.forEach((h,i)=>{if(m>=tm(h[0])&&m<tm(h[1]))cur=i});
+ return{m,ti,cur}}
+function drawNow(){
+ const{m,ti,cur}=state();
+ const set=(l,n,s,p)=>{$("nowLab").textContent=l;$("nowName").innerHTML=n;$("nowSub").innerHTML=s;$("pb").style.width=p+"%"};
+ if(ti<0)return set("Fin de semana","🎉 Hoy no hay clase","El lunes empiezas a las 8:30 con "+S[T[0][0]][0],0);
+ if(cur>=0){const k=T[cur][ti],[a,b]=[tm(hours[cur][0]),tm(hours[cur][1])];
+  const nx=T[cur+1]?S[T[cur+1][ti]][0]:"fin de la jornada";
+  return set("Ahora · "+(cur+1)+"ª hora",S[k][2]+" "+S[k][0],`Quedan ${b-m} min · Siguiente: ${nx}`,Math.round((m-a)/(b-a)*100))}
+ if(m<tm("8:30"))return set("Hoy","☀️ Empiezas a las 8:30",S[T[0][ti]][0],0);
+ if(m>=tm("14:30"))return set("Hoy","✅ Clases terminadas","Mañana: "+(ti<4?S[T[0][ti+1]][0]:"fin de semana"),100);
+ const nx=hours.findIndex(h=>tm(h[0])>m);
+ set("Recreo","☕ Recreo",`Vuelves a las ${hours[nx][0]} con ${S[T[nx][ti]][0]}`,0)}
+// Une horas seguidas de la misma asignatura (sin cruzar recreos: entre 2ª-3ª y 4ª-5ª)
+function span(r,c){
+ const k=T[r][c];
+ if(r>0&&r!==2&&r!==4&&T[r-1][c]===k)return 0;
+ let n=1;
+ while(r+n<T.length&&r+n!==2&&r+n!==4&&T[r+n][c]===k)n++;
+ return n}
+function drawTable(){
+ const{ti,cur}=state();
+ let h="<thead><tr><th></th>"+days.map((x,i)=>`<th class="${i===ti?'today':''}">${x}</th>`).join("")+"</tr></thead><tbody>";
+ hours.forEach((hr,r)=>{
+  if(r===2)h+='<tr class="rec"><td colspan="6">☕ Recreo 10:20 – 10:40</td></tr>';
+  if(r===4)h+='<tr class="rec"><td colspan="6">☕ Recreo 12:30 – 12:40</td></tr>';
+  h+=`<tr><td class="h"><b>${r+1}ª</b>${hr[0]}<br>${hr[1]}</td>`;
+  T[r].forEach((k,c)=>{const sp=span(r,c);if(!sp)return;
+   const cls=[S[k][1],S[k][3],"c",c===ti?"today":"",(c===ti&&cur>=r&&cur<r+sp)?"cur":"",isDim(k)?"dim":""].join(" ");
+   h+=`<td rowspan="${sp}" class="${cls}"><small>${S[k][2]}</small>${S[k][0]}${sp>1?`<div class="mut" style="font-weight:400;font-size:.75rem;margin-top:2px">${hr[0]}–${hours[r+sp-1][1]}</div>`:""}</td>`});
+  h+="</tr>"});
+ $("tbl").innerHTML=h+"</tbody>"}
+function drawDay(){
+ const{ti,cur}=state();
+ $("bar").innerHTML=days.map((x,i)=>`<button class="${i===sel?'on':''}" data-i="${i}">${i===ti?'● ':''}${x}</button>`).join("");
+ $("bar").querySelectorAll("button").forEach(b=>b.onclick=()=>{sel=+b.dataset.i;drawDay()});
+ const s=sel==null?0:sel;
+ $("day").innerHTML=hours.map((hr,r)=>{const sp=span(r,s);if(!sp)return"";const k=T[r][s];
+  const isCur=s===ti&&cur>=r&&cur<r+sp;
+  return (r===2||r===4?`<div class="mut" style="text-align:center;margin:4px 0 8px">☕ Recreo</div>`:"")+
+  `<div class="item ${S[k][1]} ${S[k][3]} ${isCur?'cur':''}" style="${sp>1?'padding:26px 14px;':''}${isDim(k)?'opacity:.25':''}"><div class="t">${r+1}ª${sp>1?'–'+(r+sp)+'ª':''} · ${hr[0]}–${hours[r+sp-1][1]}</div><div class="n">${S[k][2]} ${S[k][0]}</div></div>`}).join("")}
+function drawLeg(){
+ const cnt={};T.flat().forEach(k=>cnt[k]=(cnt[k]||0)+1);
+ $("leg").innerHTML=Object.keys(S).map(k=>`<button class="chip ${S[k][1]} ${S[k][3]} ${hl===k?'on':''}" data-k="${k}"><span>${S[k][2]} ${S[k][0]}</span><b>${cnt[k]} h</b></button>`).join("");
+ $("leg").querySelectorAll("button").forEach(b=>b.onclick=()=>{hl=hl===b.dataset.k?null:b.dataset.k;render()})}
+function drawProf(){
+ const cnt={};T.flat().forEach(k=>cnt[k]=(cnt[k]||0)+1);
+ $("pleg").innerHTML=P.map(([n,g,e])=>{
+  const ks=Object.keys(S).filter(k=>S[k][3]===g),h=ks.reduce((a,k)=>a+cnt[k],0);
+  return `<button class="chip prof ${g} ${hl===g?'on':''}" data-g="${g}"><span class="pn">${e} ${n}</span><span class="ps">${ks.map(k=>S[k][0]).join(" · ")}</span><b>${h} h/semana</b></button>`}).join("");
+ $("pleg").querySelectorAll("button").forEach(b=>b.onclick=()=>{hl=hl===b.dataset.g?null:b.dataset.g;render()})}
+function render(){drawNow();drawTable();drawDay();drawLeg();drawProf()}
+$("theme").onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
+render();setInterval(()=>{drawNow();drawTable()},30000);
+</script>
+</body>
+</html>
